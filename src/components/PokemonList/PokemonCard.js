@@ -11,12 +11,16 @@ const PokemonCard = ({ pokemon }) => {
         <Grid.Column mobile={16} tablet={8} computer={4}>
             <div className='PokemonCard'>
                 <Icon name='favorite' color={FAV_COLOR} />
-                <Image centered src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="Pokemon Card" />
+                <Image centered src={pokemon.sprites.front_default} alt="Pokemon Card" />
                 <h2 className='PokemonCard-title'>{pokemon.name}</h2>
                 <Divider />
-                <Label color={MAIN_COLOR}>
-                    Normal
-                </Label>
+                {pokemon.types.map((type, index) => {
+                    return (
+                        <Label color={MAIN_COLOR} key={`${pokemon.name}-${index}`}>
+                            {type.type.name}
+                        </Label>
+                    );
+                })}
             </div>
         </Grid.Column>
     );
