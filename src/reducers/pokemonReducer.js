@@ -1,7 +1,7 @@
 import { SET_POKEMON } from "../actions/type";
 
 const initialState = {
-    list: []
+    list: [],
 };
 
 const pokemonReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const pokemonReducer = (state = initialState, action) => {
         case SET_POKEMON:
             return { ...state, list: action.payload };
         default:
-            return { ...state };
+            return state;
     }
 }
 
