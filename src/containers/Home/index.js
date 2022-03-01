@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { setPokemon } from '../../actions';
 import { getPokemons } from '../../api/getPokemons';
 
@@ -8,28 +8,40 @@ import Searcher from '../../components/Searcher';
 
 import './styles.css';
 
-const mapStateToProps = state => ({
-  pokemons: state.list,
-});
+//** Se comenta connect para utilizar useDispatch 
+//* const mapStateToProps = state => ({
+//*   pokemons: state.list,
+//* });
 
-const mapDispatchToProps = dispatch => ({
-  setPokemons: value => dispatch(setPokemon(value)),
-});
+//* const mapDispatchToProps = dispatch => ({
+//*   setPokemons: value => dispatch(setPokemon(value)),
+//* });
 
-function Home({ pokemons, setPokemons }) {
+//* En este caso se quitan los parametros pros de opkemons y setPokemons que se mandaban en el connect,
+//* Ahora se manda en el useSelector --> function Home({ pokemons, setPokemons }) {
+
+function Home() {
+  const dispatch = useDispatch();
+  const list = useSelector(state => state.list);
+
+  console.log('data hook:', list);
+
   useEffect(() => {
     getPokemons().then((res) => {
       console.log('info pokemones:', res);
-      setPokemons(res.results);
+      dispatch(setPokemon(res.results));
     });
   }, []);
 
   return (
     <div className='Home'>
       <Searcher />
-      <PokemomList pokemons={pokemons} />
+      <PokemomList pokemons={list} />
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+//** Se comenta connect para utilizar useDispatch 
+//* export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export default Home;

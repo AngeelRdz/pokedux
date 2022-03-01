@@ -5,7 +5,8 @@ import PokemonCard from './PokemonCard';
 import './styles.css';
 
 const PokemomList = ({ pokemons }) => {
-    // const pokemons = Array(20).fill('');
+    //** Se comenta ya que se obtiene la data de la API del props pokemons */
+    //* const pokemons = Array(20).fill('');
 
     return (
         <div className='wrapper'>
@@ -17,5 +18,9 @@ const PokemomList = ({ pokemons }) => {
         </div>
     )
 }
+
+PokemomList.defaultProps = {
+    pokemons: []
+};
 
 export default PokemomList;
