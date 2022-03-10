@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getPokemonWithDetails, setError, setPokemons } from '../../actions';
+import { fetchPokemonDetails, getPokemonWithDetails, setError, setPokemons } from '../../actions';
 import { getPokemons } from '../../api/getPokemons';
 
 import PokemomList from '../../components/PokemonList';
@@ -28,7 +28,15 @@ function Home() {
   // console.log('data hook:', list);
 
   useEffect(() => {
-    dispatch(getPokemonWithDetails());
+    //* Se comenta para utilizarlo en redux-thunk
+    // dispatch(getPokemonWithDetails());
+    getPokemons()
+      .then((res) => {
+        dispatch(fetchPokemonDetails(res.results));
+      })
+      .catch((error) => {
+        dispatch(setError({ message: 'Ocurrió un error', error }));
+      });
   }, []);
 
   return (
