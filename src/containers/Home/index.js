@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { setError, setPokemons } from '../../actions';
+import { getPokemonWithDetails, setError, setPokemons } from '../../actions';
 import { getPokemons } from '../../api/getPokemons';
 
 import PokemomList from '../../components/PokemonList';
@@ -28,26 +28,7 @@ function Home() {
   // console.log('data hook:', list);
 
   useEffect(() => {
-    getPokemons()
-      .then((res) => {
-        const pokemonList = res.results;
-        console.log('info pokemones:', res);
-        return Promise.all(
-          pokemonList.map(pokemon => axios.get(pokemon.url))
-        );
-        // dispatch(setPokemons(res.results));
-      })
-      .then((pokemonResponse) => {
-        console.log('pokemonResponse::', pokemonResponse);
-        const pokemonsWithDetails = pokemonResponse.map(
-          response => response.data
-        );
-        console.log('pokemonsWithDetails::', pokemonsWithDetails);
-        dispatch(setPokemons(pokemonsWithDetails));
-      })
-      .catch((error) => {
-        dispatch(setError({ message: 'Ocurrio un error', error }));
-      });
+    dispatch(getPokemonWithDetails());
   }, []);
 
   return (
